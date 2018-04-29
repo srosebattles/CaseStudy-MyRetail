@@ -1,14 +1,26 @@
-import React from 'react';
-import { Link, Route } from "react-router-dom";
+import React, { Component } from 'react';
 import './App.css';
 
-const Product = ({ match }) =>  {
+class Product extends Component  {
+  
+   constructor(props) {
+   super(props);
+   this.state = {
+     catalog: this.props.catalog
+     }
+   }
 
-  return (
-    <div>
-      <h2>Product Page</h2>
-    </div>
-  );
-}
+   componentDidMount() {
+     console.log(this.props)
+   }
+
+ render(){
+   return (
+     <div>
+       <h2>Product Page</h2>
+     </div>
+   )
+ }
+ }
 
 export default Product;
