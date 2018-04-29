@@ -2,9 +2,9 @@
   "name": "CaseStudy-MyRetail",
   "version": "1.0.0",
   "scripts": {
-    "client": "cd client && npm start",
+    "client": "cd client && npm run",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail" \"npm start server\" \"npm start client"\
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "express": "^4.16.2"
