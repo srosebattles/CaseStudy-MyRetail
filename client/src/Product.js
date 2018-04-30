@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 
 class Product extends Component  {
@@ -8,9 +9,13 @@ class Product extends Component  {
    this.state = {
      availableOnline: false,
      availableInstore: false,
-     mainImageUrl: this.props.item.Images[0].PrimaryImage[0].image,
-     imageUrls: []
+     imageUrl: this.props.item.Images[0].PrimaryImage[0].image,
+     imageUrls: [],
+     currentImageIndex: '0'
      }
+
+      this.getNextImage = this.getNextImage.bind(this);
+      this.getLastImage = this.getLastImage.bind(this);
    }
 
    componentDidMount() {
@@ -32,21 +37,29 @@ class Product extends Component  {
        urlArray.push(image)
       })}
       this.setState({ imageUrls: urlArray });
+      return urlArray;
    }
 
    getLastImage(){
+     let array = this.grabImageUrls(this.props.item)
+     let newUrl = array[5]
+     console.log(newUrl)
 
-     this.setState({mainImageUrl: ''})
+     this.setState({imageUrl: newUrl})
    }
 
    getNextImage(){
-
-     this.setState({mainImageUrl: ''})
+     let array = this.grabImageUrls(this.props.item)
+     let newUrl = array[2].image
+     console.log(newUrl)
+     this.setState({imageUrl: newUrl })
+     //console.log(this.state.imageUrl)
    }
 
  render(){
    const online = this.state.availableOnline;
    const instore = this.state.availableInstore;
+
    return (
      <div id="productPageContainer" className="textAlignLeft">
 
@@ -54,10 +67,10 @@ class Product extends Component  {
 
         <section id="titleAndImagesBlock" className="textAlignCenter">
           <h2 className="grayText">{this.props.item.title}</h2>
-          <BigImage url={this.state.mainImageUrl} alt={this.props.item.title} title={this.props.item.title}/>
+          <BigImage url={this.state.imageUrl} alt={this.props.item.title} title={this.props.item.title}/>
           <div className="flexCenter">
-            <CarouselArrow arrow="&#9664;"/>
-            <CarouselArrow arrow="&#9654;"/>
+            <CarouselArrow whenClicked={this.getLastImage} arrow="&#9664;"/>
+            <CarouselArrow whenClicked={this.getNextImage} arrow="&#9654;"/>
           </div>
         </section>
 
@@ -109,7 +122,7 @@ function CartButton(props) {
 
 function BigImage(props) {
  return (
-   <img src={props.url} alt={props.alt} title={props.title}/>
+   <img src={props.url} alt={props.alt} title={props.title} />
  );
 }
 
