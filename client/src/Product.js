@@ -11,7 +11,7 @@ class Product extends Component  {
      availableInstore: false,
      imageUrl: this.props.item.Images[0].PrimaryImage[0].image,
      imageUrls: [],
-     currentImageIndex: '0'
+     currentImageIndex: 0
      }
 
       this.getNextImage = this.getNextImage.bind(this);
@@ -33,6 +33,7 @@ class Product extends Component  {
 
    grabImageUrls(item){
      let urlArray = []
+     urlArray.push(this.props.item.Images[0].PrimaryImage[0].image)
      {this.props.item.Images[0].AlternateImages.map(function(image){
        urlArray.push(image)
       })}
@@ -42,18 +43,24 @@ class Product extends Component  {
 
    getLastImage(){
      let array = this.grabImageUrls(this.props.item)
-     let newUrl = array[5]
-     console.log(newUrl)
+     const lastIndex = array.length - 1;
+     const { currentImageIndex } = this.state;
+     const shouldResetIndex = currentImageIndex === 0;
+     const index =  shouldResetIndex ? lastIndex : currentImageIndex - 1;
+     let newUrl = array[this.state.currentImageIndex].image
 
-     this.setState({imageUrl: newUrl})
+     this.setState({imageUrl: newUrl, currentImageIndex: index})
    }
 
    getNextImage(){
      let array = this.grabImageUrls(this.props.item)
-     let newUrl = array[2].image
-     console.log(newUrl)
-     this.setState({imageUrl: newUrl })
-     //console.log(this.state.imageUrl)
+     const lastIndex = array.length - 1;
+     const { currentImageIndex } = this.state;
+     const shouldResetIndex = currentImageIndex === lastIndex;
+     const index =  shouldResetIndex ? 0 : currentImageIndex + 1;
+     let newUrl = array[this.state.currentImageIndex].image
+
+     this.setState({imageUrl: newUrl, currentImageIndex: index })
    }
 
  render(){
