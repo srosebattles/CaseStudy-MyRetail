@@ -18,6 +18,25 @@
   color: black;
 }
 
+button {
+  border: none;
+  border-radius: 2px;
+  width: 48%;
+  padding: .5rem;
+}
+
+hr {
+  color: lightgray;
+}
+
+/*mocking this element for now for layout purposes*/
+#reviewsBlock {
+  background-color: lightgray;
+  height: 8rem;
+  width: 99%;
+  margin: .5rem 0;
+}
+
 /* display classes*/
 .flex {
   display: flex;
@@ -26,6 +45,11 @@
 .flexStart {
   display: flex;
   justify-content: flex-start;
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
 }
 
 .flexSpaceBetween {
@@ -47,16 +71,28 @@
 
 /*margins*/
 .smallLeftMargin {
-  margin-left: .5rem
+  margin-left: .5rem;
 }
 
 .smallRightMargin {
   margin-right: .5rem
 }
 
-/*text-related classes*/
-.tinyText {
+/*text-related classes TODO: change out color keywords for appropriate hex or rgba values */
+.text10px {
   font-size: 10px
+}
+
+.text14px {
+  font-size: 14px
+}
+
+.text18px {
+  font-size: 18px;
+}
+
+.text24px {
+  font-size: 24px;
 }
 
 .grayText {
@@ -71,7 +107,15 @@
   color: whitesmoke;
 }
 
-/*background colors*/
+.textAlignCenter {
+  text-align: center;
+}
+
+.textAlignLeft {
+  text-align: left;
+}
+
+/*background colors TODO: change out color keywords for appropriate hex or rgba values */
 .redBkg {
   background-color: red;
 }
@@ -81,13 +125,26 @@
 }
 
 @keyframes carouselTransition {
-
+  /*TODO: make image carousel transition prettily */
 }
 
 @media (min-width: 680px) {
+  #productPageContainer {
+    padding: 1rem;
+   }
 
+    #topRowFlexContainer {
+      display: flex;
+    }
+
+    #titleAndImagesBlock, #priceButtonsAndHighlightsBlock, #reviewsBlock {
+      width: 50%;
+      margin: .5rem;
+    }
 }
 
 @media (min-width: 1000px) {
-
+    #productPageContainer {
+      padding: 1.5rem 4rem .5rem 4rem;
+    }
 }

@@ -6,31 +6,86 @@ class Product extends Component  {
    constructor(props) {
    super(props);
    this.state = {
-     catalog: this.props.catalog
+     availableOnline: false,
+     availableInstore: false,
+     mainImageUrl: this.props.item.Images[0].PrimaryImage[0].image,
+     imageUrls: []
      }
    }
 
    componentDidMount() {
-     console.log(this.props.item)
+     this.checkChannelAvailability(this.props.item)
+     this.grabImageUrls();
+   }
+
+   checkChannelAvailability(item){
+     if (item.purchasingChannelCode === "0" || item.purchasingChannelCode === "1") {
+       this.setState({ availableOnline: true });
+     } else if (item.purchasingChannelCode === "0" || item.purchasingChannelCode === "2"){
+       this.setState({ availableInstore: true });
+     }
+   }
+
+   grabImageUrls(item){
+     let urlArray = []
+     {this.props.item.Images[0].AlternateImages.map(function(image){
+       urlArray.push(image)
+      })}
+      this.setState({ imageUrls: urlArray });
+   }
+
+   getLastImage(){
+
+     this.setState({mainImageUrl: ''})
+   }
+
+   getNextImage(){
+
+     this.setState({mainImageUrl: ''})
    }
 
  render(){
+   const online = this.state.availableOnline;
+   const instore = this.state.availableInstore;
    return (
-     <div>
-        <div>
+     <div id="productPageContainer" className="textAlignLeft">
+
+      <div id="topRowFlexContainer">
+
+        <section id="titleAndImagesBlock" className="textAlignCenter">
           <h2 className="grayText">{this.props.item.title}</h2>
-          <img src={this.props.item.Images[0].PrimaryImage[0].image} alt={this.props.item.title} />
-        </div>
-        <div>
+          <BigImage url={this.state.mainImageUrl} alt={this.props.item.title} title={this.props.item.title}/>
+          <div className="flexCenter">
+            <CarouselArrow arrow="&#9664;"/>
+            <CarouselArrow arrow="&#9654;"/>
+          </div>
+        </section>
+
+        <section id="priceButtonsAndHighlightsBlock">
           <div>
-          <span className="smallRightMargin">{this.props.item.Offers[0].OfferPrice[0].formattedPriceValue}</span><span className="grayText tinyText">{this.props.item.Offers[0].OfferPrice[0].priceQualifier}</span>
+          <span className="smallRightMargin text24px">{this.props.item.Offers[0].OfferPrice[0].formattedPriceValue}</span><span className="grayText text10px">{this.props.item.Offers[0].OfferPrice[0].priceQualifier}</span>
           </div>
           <hr />
+          <ul>
           {this.props.item.Promotions.map(function(promotion){
-              return <div className="redText">{promotion.Description[0].shortDescription}</div>;
+              return <li className="redText text14px">{promotion.Description[0].shortDescription}</li>;
             })}
+          </ul>
           <hr />
-        </div>
+          {instore &&
+            <StoreButton />
+          }
+          {online &&
+            <CartButton />
+          }
+
+        </section>
+      </div>
+
+        <section id="reviewsBlock">
+
+        </section>
+
      </div>
    )
  }
@@ -38,17 +93,31 @@ class Product extends Component  {
 
  function StoreButton(props) {
   return (
-    <button >
+    <button className="whiteText blackBkg text18px smallRightMargin">
       PICK UP IN STORE
     </button>
   );
 }
 
 function CartButton(props) {
-  return (
-    <button>
+ return (
+    <button className="whiteText redBkg text18px">
       ADD TO CART
     </button>
+ );
+}
+
+function BigImage(props) {
+ return (
+   <img src={props.url} alt={props.alt} title={props.title}/>
+ );
+}
+
+function CarouselArrow(props) {
+  return (
+    <div onClick={props.whenClicked}>
+      {props.arrow}
+    </div>
   );
 }
 
