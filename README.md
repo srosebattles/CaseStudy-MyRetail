@@ -5,7 +5,7 @@ The company’s annual revenue last year was $5 billion and growing at the rate 
 myRetail is comparing solution options for the online grocery store.
 
 ##Sources
-This project was bootstrapped with Create React App. Other dependencies include Express, React Router, and axios.
+This project was bootstrapped with Create React App. Other dependencies include Express, React Router (v4), and axios.
 
 ##Getting started
  Locally:
@@ -24,4 +24,4 @@ This project was bootstrapped with Create React App. Other dependencies include 
 
 In Production:
 
-    If you run into an unexpected behavior, please let me know!
+    TBD
