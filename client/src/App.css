@@ -1,27 +1,86 @@
+/*app setup*/
+
 .App {
   text-align: center;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.nav {
+  display: flex;
+  list-style-type: none;
 }
 
-.App-title {
-  font-size: 1.5em;
+.navItem {
+  padding-right: .5rem;
 }
 
-.App-intro {
-  font-size: large;
+.navItem a {
+  text-decoration: none;
+  color: black;
+}
+
+/* display classes*/
+.flex {
+  display: flex;
+}
+
+.flexStart {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.flexSpaceBetween {
+  display: flex;
+  justify-content:space-between;
+}
+
+.inlineBlock {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.displayNone {
+  display: none;
+}
+
+/*margins*/
+.smallLeftMargin {
+  margin-left: .5rem
+}
+
+.smallRightMargin {
+  margin-right: .5rem
+}
+
+/*text-related classes*/
+.tinyText {
+  font-size: 10px
+}
+
+.grayText {
+  color: gray;
+}
+
+.redText {
+  color: red;
+}
+
+.whiteText {
+  color: whitesmoke;
+}
+
+/*background colors*/
+.redBkg {
+  background-color: red;
+}
+
+.blackBkg {
+  background-color: black;
 }
 
 @keyframes carouselTransition {
-
-}
-
-@media (min-width: 375px) {
 
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
 import ProductList from './ProductList';
-import ContactUs from './ContactUs';
+import Welcome from './Welcome';
 import NoMatch from './NoMatch';
 import Product from './Product';
 import axios from "axios";
@@ -13,6 +13,8 @@ class App extends Component {
   super(props);
   this.state = {
     catalog: [],
+    //TODO: factor api base out for maintainability
+    //API URL as state because in the future user search/navigation may change the endpoint we are hitting to get our items
     apiUrl: 'http://localhost:5002/api/catalog'
     }
   }
@@ -26,7 +28,6 @@ class App extends Component {
       this.setState({
         catalog: newCatalog
       })
-      //console.log(this.state.catalog)
     })
     .catch((error) => {
       alert("Encountered an error while getting product catalog");
@@ -44,15 +45,16 @@ class App extends Component {
               <Link to={'/productList'}>Products</Link>
             </li>
             <li className="navItem">
-              <Link to={'/contactUs'}>Contact Us</Link>
+              <Link to={'/welcome'}>Welcome</Link>
             </li>
           </ul>
         </header>
         <main className="App-body" role="main">
           <Switch>
-            <Route path="/productList" component={ProductList} />
-            <Route path="/contactUs" component={ContactUs} />
-            <Route path="/product/:productId" render={props => <Product catalog={this.state.catalog} {...props} />}/>
+            <Route exact path="/" component={Welcome} />
+            <Route path="/productList" render={props => <ProductList catalog={this.state.catalog} {...props} />} />
+            <Route path="/welcome" component={Welcome} />
+            <Route path="/product/:productId" render={props => <Product item={this.state.catalog.find(p => p.itemId === props.match.params.productId)} {...props} />}/>
             <Route path="*" component={NoMatch} />
           </Switch>
         </main>
