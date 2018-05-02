@@ -33,7 +33,8 @@ class Product extends Component  {
 
    grabImageUrls(item){
      let urlArray = []
-     urlArray.push(this.props.item.Images[0].PrimaryImage[0].image)
+     let mainImageObj = { image: this.props.item.Images[0].PrimaryImage[0].image}
+     urlArray.push(mainImageObj)
      {this.props.item.Images[0].AlternateImages.map(function(image){
        urlArray.push(image)
       })}
@@ -47,7 +48,7 @@ class Product extends Component  {
      const { currentImageIndex } = this.state;
      const shouldResetIndex = currentImageIndex === 0;
      const index =  shouldResetIndex ? lastIndex : currentImageIndex - 1;
-     let newUrl = array[this.state.currentImageIndex].image
+     let newUrl = array[Number(index)].image
 
      this.setState({imageUrl: newUrl, currentImageIndex: index})
    }
@@ -58,7 +59,7 @@ class Product extends Component  {
      const { currentImageIndex } = this.state;
      const shouldResetIndex = currentImageIndex === lastIndex;
      const index =  shouldResetIndex ? 0 : currentImageIndex + 1;
-     let newUrl = array[this.state.currentImageIndex].image
+     let newUrl = array[Number(index)].image
 
      this.setState({imageUrl: newUrl, currentImageIndex: index })
    }
@@ -167,7 +168,7 @@ function ItemReturnInfo(props){
     <div className="flexStart topMargin">
       <div className="grayText text24px returnInfoBorder smallRightPadding">returns</div>
       <div className="grayText text14px smallLeftPadding">
-        Most items can be returned within 30 days of purchase. See policy for details.
+        Most items can be returned within 30 days. See policy for details.
         <br />
         Prices, promotions, and availabilty may vary.
       </div>
