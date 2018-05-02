@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './App.css';
 
 class Product extends Component  {
@@ -11,7 +10,7 @@ class Product extends Component  {
      availableInstore: false,
      imageUrl: this.props.item.Images[0].PrimaryImage[0].image,
      imageUrls: [],
-     currentImageIndex: 0
+     currentImageIndex: 0,
      }
 
       this.getNextImage = this.getNextImage.bind(this);
@@ -64,8 +63,6 @@ class Product extends Component  {
    }
 
  render(){
-   const online = this.state.availableOnline;
-   const instore = this.state.availableInstore;
 
    return (
      <div id="productPageContainer" className="textAlignLeft">
@@ -73,37 +70,34 @@ class Product extends Component  {
       <div id="topRowFlexContainer">
 
         <section id="titleAndImagesBlock" className="textAlignCenter">
-          <h2 className="grayText">{this.props.item.title}</h2>
-          <BigImage url={this.state.imageUrl} alt={this.props.item.title} title={this.props.item.title}/>
+          <ItemTitle title={this.props.item.title} />
           <div className="flexCenter">
             <CarouselArrow whenClicked={this.getLastImage} arrow="&#9664;"/>
+            <BigImage url={this.state.imageUrl} alt={this.props.item.title} title={this.props.item.title}/>
             <CarouselArrow whenClicked={this.getNextImage} arrow="&#9654;"/>
           </div>
         </section>
 
         <section id="priceButtonsAndHighlightsBlock">
-          <div>
-          <span className="smallRightMargin text24px">{this.props.item.Offers[0].OfferPrice[0].formattedPriceValue}</span><span className="grayText text10px">{this.props.item.Offers[0].OfferPrice[0].priceQualifier}</span>
-          </div>
-          <hr />
-          <ul>
-          {this.props.item.Promotions.map(function(promotion){
-              return <li className="redText text14px">{promotion.Description[0].shortDescription}</li>;
-            })}
-          </ul>
-          <hr />
-          {instore &&
-            <StoreButton />
-          }
-          {online &&
-            <CartButton />
-          }
+          <PriceInfo priceInfo={this.props.item.Offers[0].OfferPrice[0]} />
+
+          <Promotions item={this.props.item} />
+
+          <StoreButton instore={this.state.availableInstore} />
+
+          <CartButton online={this.state.availableOnline} />
+
+          <ItemReturnInfo policy={this.props.item.ReturnPolicy[0]} />
+
+          <h1 className="highlightsTitle">product highlights</h1>
+
+          <Highlights highlights={this.props.item.ItemDescription[0].features} />
 
         </section>
       </div>
 
         <section id="reviewsBlock">
-
+          <Reviews reviews={this.props.item.CustomerReview[0]} />
         </section>
 
      </div>
@@ -111,34 +105,114 @@ class Product extends Component  {
  }
  }
 
- function StoreButton(props) {
+ function ItemTitle(props) {
+   return (
+   <h2 className="grayText fontWeightNormal">{props.title}</h2>
+    );
+ }
+
+ function BigImage(props) {
   return (
-    <button className="whiteText blackBkg text18px smallRightMargin">
+    <img className="carouselImage" src={props.url} alt={props.alt} title={props.title} />
+  );
+ }
+
+ function CarouselArrow(props) {
+   return (
+     <div className="carouselArrowPadding" onClick={props.whenClicked}>
+       {props.arrow}
+     </div>
+   );
+ }
+
+ function PriceInfo(props){
+   return (
+     <div>
+      <span className="smallRightMargin text24px">{props.priceInfo.formattedPriceValue}</span>
+      <span className="grayText text10px">{props.priceInfo.priceQualifier}</span>
+     </div>
+   );
+ }
+
+ function Promotions(props) {
+   return (
+   <div>
+    <hr />
+      <ul>
+          {props.item.Promotions.map(function(promotion){
+            return <li key={promotion.promotionIdentifier} className="redText text14px">{promotion.Description[0].shortDescription}</li>;
+          })}
+      </ul>
+    <hr />
+   </div>
+ );
+ }
+
+ function StoreButton(props) {
+   if (props.instore){
+  return (
+    <button className="whiteText blackBkg text18px smallLeftMargin">
       PICK UP IN STORE
     </button>
   );
 }
+  return null;
+
+}
 
 function CartButton(props) {
+  if (props.online){
  return (
-    <button className="whiteText redBkg text18px">
+    <button className="whiteText redBkg text18px smallLeftMargin">
       ADD TO CART
     </button>
- );
+       );
+ }
+   return null;
 }
 
-function BigImage(props) {
- return (
-   <img src={props.url} alt={props.alt} title={props.title} />
- );
-}
-
-function CarouselArrow(props) {
+function ItemReturnInfo(props){
+  //correct copy wasn't available in the json - commented below is the full return policy text
   return (
-    <div onClick={props.whenClicked}>
-      {props.arrow}
+    <div className="flexStart topMargin">
+      <div className="grayText text24px returnInfoBorder smallRightPadding">returns</div>
+      <div className="grayText text14px smallLeftPadding">
+        Most items can be returned within 30 days of purchase. See policy for details.
+        <br />
+        Prices, promotions, and availabilty may vary.
+      </div>
     </div>
   );
 }
+
+function Highlights(props) {
+  return (
+  <ul>
+  {props.highlights.map(function(highlight){
+    return <li key={highlight} className="grayText text14px smallBottomMargin" dangerouslySetInnerHTML={{__html: highlight}}></li>;
+  })}
+  </ul>
+);
+}
+
+function Reviews(props) {
+  return (
+<div className="reviewsDiv">
+    <div className="flex">
+        <h4 className="width50 fontWeightNormal">PRO</h4>
+        <h4 className="width50 fontWeightNormal">CON</h4>
+    </div>
+    <hr />
+    <div className="flex">
+        <p className="text14px width50 smallRightPadding smallLeftPadding">{props.reviews.Pro[0].review}</p>
+        <p className="text14px width50 smallRightPadding smallLeftPadding">{props.reviews.Con[0].review}</p>
+    </div>
+</div>
+  );
+}
+
+
+
+
 
 export default Product;

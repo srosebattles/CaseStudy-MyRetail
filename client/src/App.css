@@ -29,11 +29,9 @@ hr {
   color: lightgray;
 }
 
-/*mocking this element for now for layout purposes*/
-#reviewsBlock {
-  background-color: lightgray;
-  height: 8rem;
-  width: 99%;
+
+.reviewsDiv {
+  background-color: #eee;
   margin: .5rem 0;
 }
 
@@ -69,16 +67,37 @@ hr {
   display: none;
 }
 
-/*margins*/
+.width50 {
+  width: 50%
+}
+
+/*margins and padding*/
 .smallLeftMargin {
   margin-left: .5rem;
 }
 
 .smallRightMargin {
-  margin-right: .5rem
+  margin-right: .5rem;
 }
 
-/*text-related classes TODO: change out color keywords for appropriate hex or rgba values */
+.smallBottomMargin {
+  margin-bottom: .5rem;
+}
+
+.topMargin {
+  margin-top: 1rem
+}
+
+.smallLeftPadding {
+  padding-left: .5rem;
+}
+
+.smallRightPadding {
+  padding-right: .5rem;
+}
+
+/*text-related classes*/
+/* TODO: change out color keywords for appropriate hex or rgba values */
 .text10px {
   font-size: 10px
 }
@@ -93,6 +112,10 @@ hr {
 
 .text24px {
   font-size: 24px;
+}
+
+.text40px {
+  font-size: 48px;
 }
 
 .grayText {
@@ -115,13 +138,38 @@ hr {
   text-align: left;
 }
 
-/*background colors TODO: change out color keywords for appropriate hex or rgba values */
+.fontWeightNormal {
+  font-weight: normal;
+}
+
+/*background colors */
+/*TODO: change out color keywords for appropriate hex or rgba values */
 .redBkg {
   background-color: red;
 }
 
 .blackBkg {
   background-color: black;
+}
+
+/*classes applied to specific elements*/
+
+.returnInfoBorder {
+  border-right: 2px gray solid;
+}
+
+.carouselImage {
+  height: 180px;
+  width: 180px;
+}
+
+.carouselArrowPadding {
+  padding-top: 90px;
+}
+
+.highlightsTitle {
+  font-weight: lighter;
+  font-size: 24px;
 }
 
 @keyframes carouselTransition {
@@ -141,10 +189,36 @@ hr {
       width: 50%;
       margin: .5rem;
     }
+
+    .carouselImage {
+      height: 300px;
+      width: 300px;
+    }
+
+    .carouselArrowPadding {
+      padding-top: 150px;
+    }
+
+    .highlightsTitle {
+      font-size: 28px;
+    }
 }
 
 @media (min-width: 1000px) {
     #productPageContainer {
       padding: 1.5rem 4rem .5rem 4rem;
+    }
+
+    .carouselImage {
+      height: 400px;
+      width: 400px;
+    }
+
+    .carouselArrowPadding {
+      padding-top: 200px;
+    }
+
+    .highlightsTitle {
+      font-size: 40px;
     }
 }
