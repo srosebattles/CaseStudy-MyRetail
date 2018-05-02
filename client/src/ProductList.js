@@ -10,8 +10,8 @@ class ProductList extends Component {
     return (
     <div>
       {this.props.catalog.map(function(product){
-      return <span>
-      <Link key={product.itemId} to={`/product/${product.itemId}`}>
+      return <span key={product.itemId}>
+      <Link  to={`/product/${product.itemId}`}>
       <div className="ItemLinkContainer">
         <div>
           <img className="carouselImage" src={product.Images[0].PrimaryImage[0].image} alt={product.title} />

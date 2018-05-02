@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CartButton from './CartButton.js'
 import './App.css';
 
 class Product extends Component  {
@@ -160,19 +161,8 @@ class Product extends Component  {
 
 }
 
-function CartButton(props) {
-  if (props.online){
- return (
-    <button className="whiteText redBkg text18px smallLeftMargin">
-      ADD TO CART
-    </button>
-       );
- }
-   return null;
-}
-
 function ItemReturnInfo(props){
-  //correct copy wasn't available in the json - commented below is the full return policy text
+  //correct copy wasn't available in the json
   return (
     <div className="flexStart topMargin">
       <div className="grayText text24px returnInfoBorder smallRightPadding">returns</div>
@@ -210,9 +200,5 @@ function Reviews(props) {
 </div>
   );
 }
-
-
-
-
 
 export default Product;

@@ -11,6 +11,7 @@
     "express": "^4.16.2"
   },
   "devDependencies": {
-    "concurrently": "^3.5.0"
+    "concurrently": "^3.5.0",
+    "react-cucumber": "^1.0.7"
   }
 }
